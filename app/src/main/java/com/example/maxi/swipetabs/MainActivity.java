@@ -135,7 +135,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void waitingToast(View v){
-        Toast.makeText(this, "WAIT! Programador trabajando duro como un exclavo", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "WAIT! Programador trabajando duro como un esclavo", Toast.LENGTH_LONG).show();
     }
 
     @Override

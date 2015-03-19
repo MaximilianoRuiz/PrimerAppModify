@@ -35,8 +35,11 @@ public class MyViewDayListAdapter extends ArrayAdapter<String> {
         TextView txtNight = (TextView) row.findViewById(R.id.txtDayNight);
         TextView txtDate = (TextView) row.findViewById(R.id.txtDayDate);
 
-        txtMorning.setText(morningArray.get(position) + " Kg");
-        txtNight.setText(nightArray.get(position) + " Kg");
+        String nullMorning = morningArray.get(position).equals("") ? "" : " Kg";
+        String nullNight = nightArray.get(position).equals("") ? "" : " Kg";
+
+        txtMorning.setText(morningArray.get(position) + nullMorning);
+        txtNight.setText(nightArray.get(position) + nullNight);
         txtDate.setText(dateArray.get(position));
 
         return row;

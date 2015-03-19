@@ -6,39 +6,6 @@
     tools:context="com.example.maxi.swipetabs.Fragment_b">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:id="@+id/listWeek"
-        android:layout_below="@+id/textView"
-        android:layout_alignRight="@+id/btnWeekAdd"
-        android:layout_alignEnd="@+id/btnWeekAdd"
-        android:layout_marginTop="20dp" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add"
-        android:id="@+id/btnWeekAdd"
-        android:layout_gravity="left|bottom"
-        android:onClick="addWeekDialog"
-        android:layout_alignTop="@+id/btnWeekChart"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chart"
-        android:id="@+id/btnWeekChart"
-        android:layout_gravity="right|bottom"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="waitingToast"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,4 +41,42 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="26dp"
         android:layout_marginEnd="26dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:id="@+id/listWeek"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="20dp"
+        android:layout_above="@+id/linearLayout" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:weightSum="1"
+        android:id="@+id/linearLayout">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chart"
+            android:id="@+id/btnWeekChart"
+            android:onClick="waitingToast"
+            android:layout_weight="0.50" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:id="@+id/btnWeekAdd"
+            android:onClick="addWeekDialog"
+            android:layout_weight="0.50" />
+
+    </LinearLayout>
+
 </RelativeLayout>

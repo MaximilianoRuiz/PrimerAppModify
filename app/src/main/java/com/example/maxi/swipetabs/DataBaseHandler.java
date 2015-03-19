@@ -42,7 +42,6 @@ public class DataBaseHandler {
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
 
         @Override
@@ -80,9 +79,19 @@ public class DataBaseHandler {
     }
 
     public int deleteData(String paramName) {
-        String where = "myTable.morning_weight LIKE ?";
+        String where = "myTable.date LIKE ?";
         String[] args = {paramName};
         return db.delete(TABLE_NAME, where, args);
+    }
+
+    public int upDate(String morning, String night, String date){
+        String where = "myTable.date LIKE ?";
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MORNING_WEIGHT, morning);
+        contentValues.put(NIGHT_WEIGHT, night);
+        String[] whereArgs = {date};
+        return db.update(TABLE_NAME, contentValues, where, whereArgs);
     }
 
     public List<WeightVO> returnWeightVO() {
