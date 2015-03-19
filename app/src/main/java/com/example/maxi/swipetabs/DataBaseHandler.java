@@ -15,6 +15,7 @@ public class DataBaseHandler {
     public static final String MORNING_WEIGHT= "morning_weight";
     public static final String NIGHT_WEIGHT= "night_weight";
     public static final String DATE= "date";
+    public static final String ID= "id";
     public static final String TABLE_NAME= "myTable";
     public static final String DATA_BASE_NAME= "myDataBase";
     public static final int DATABASE_VERSION= 1;
@@ -70,12 +71,12 @@ public class DataBaseHandler {
 
     public Cursor returnData() {
         try {
-            return db.query(TABLE_NAME, new String[]{MORNING_WEIGHT, NIGHT_WEIGHT, DATE}, null, null, null, null, null);
+            return db.query(TABLE_NAME, new String[]{ID, MORNING_WEIGHT, NIGHT_WEIGHT, DATE}, null, null, null, null, ID + " DESC");
         }catch (Exception e){
             Log.d("POTTER",e.getMessage());
         }
 
-        return db.query(TABLE_NAME, new String[]{MORNING_WEIGHT, NIGHT_WEIGHT, DATE}, null, null, null, null, null);
+        return db.query(TABLE_NAME, new String[]{ID, MORNING_WEIGHT, NIGHT_WEIGHT, DATE}, null, null, null, null, ID + " DESC");
     }
 
     public int deleteData(String paramName) {
@@ -103,9 +104,9 @@ public class DataBaseHandler {
 
         if (c.moveToFirst()){
             do{
-                morning = c.getString(0).toString();
-                night = c.getString(1).toString();
-                date = c.getString(2).toString();
+                morning = c.getString(1).toString();
+                night = c.getString(2).toString();
+                date = c.getString(3).toString();
                 weightVO = new WeightVO(morning, night, date);
                 weightVOs.add(weightVO);
             }while(c.moveToNext());

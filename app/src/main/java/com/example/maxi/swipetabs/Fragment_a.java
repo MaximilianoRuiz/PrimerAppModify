@@ -85,9 +85,21 @@ public class Fragment_a extends Fragment {
                 String date = txtDate.getText().toString();
                 String morning = txtMorning.getText().toString().replace(" Kg", "");
                 String night = txtNight.getText().toString().replace(" Kg", "");
-                Toast.makeText(getActivity(),"Position: "+position+"    ID: "+id+"     Date: "+date, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Position: " + position + "    ID: " + id + "     Date: " + date, Toast.LENGTH_LONG).show();
 
                 modifyDayDialog(view, morning, night, date);
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView txtDate = (TextView) view.findViewById(R.id.txtDayDate);
+                String date = txtDate.getText().toString();
+
+                Toast.makeText(getActivity(), "Delete press     "+date, Toast.LENGTH_LONG).show();
+                deleteDayDialog(view, date);
+                return false;
             }
         });
     }
@@ -97,27 +109,17 @@ public class Fragment_a extends Fragment {
         myDialog.show(getActivity().getFragmentManager(), "Dialog");
     }
 
-    public void deleteData(View v) {
-        String paramName = "";
-        dataBaseHandler = new DataBaseHandler(getActivity().getBaseContext());
-        dataBaseHandler.open();
-        Cursor C = dataBaseHandler.returnData();
-        if (C.moveToNext()){
-            paramName = C.getString(2);
-        }
-        Toast.makeText(getActivity().getBaseContext(), "Deleted: "+paramName, Toast.LENGTH_LONG).show();
-        dataBaseHandler.deleteData(paramName);
-
-        refresh();
-        dataBaseHandler.close();
-    }
-
     private void modifyDayDialog(View v, String morning, String night, String date){
         ModifyDayDialog modifyDayDialog = new ModifyDayDialog(this, morning, night, date);
         modifyDayDialog.show(getActivity().getFragmentManager(), "Dialog");
     }
 
+    private void deleteDayDialog(View v, String date){
+        DeleteDayDialog deleteDayDialog = new DeleteDayDialog(this, date);
+        deleteDayDialog.show(getActivity().getFragmentManager(), "Dialog");
+    }
+
     private String lastDateAdd(){
-        return dateList.get(dateList.size()-1);
+        return dateList.get(0);
     }
 }
