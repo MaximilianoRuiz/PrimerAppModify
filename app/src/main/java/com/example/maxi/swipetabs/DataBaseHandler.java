@@ -111,7 +111,7 @@ public class DataBaseHandler {
             }
         }catch (Exception e){
             Log.d("POTTER",e.getMessage());
-            db.execSQL(DATABASE_CREATE_TABLE_WEEK);
+            db.execSQL(DATABASE_CREATE_TABLE_MONTH);
         }
         return null;
     }

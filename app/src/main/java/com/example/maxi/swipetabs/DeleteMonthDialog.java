@@ -8,76 +8,55 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Calendar;
 
 /**
  * Created by Maxi on 14/03/2015.
  */
-public class AddMonthDialog extends DialogFragment{
+public class DeleteMonthDialog extends DialogFragment{
 
     public static final String MONTH = "MONTH";
-    TextView txtDate;
-    EditText etMornint, etNight;
     DataBaseHandler handler;
     Fragment_c fragmentC;
+    String date;
 
-    public AddMonthDialog(Fragment_c fragmentC) {
+    public DeleteMonthDialog(Fragment_c fragmentC, String date) {
         this.fragmentC = fragmentC;
+        this.date = date;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View view = inflater.inflate(R.layout.add_month_dialog, null);
+        final View view = inflater.inflate(R.layout.delete_month_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        txtDate = (TextView) view.findViewById(R.id.editMonthDate);
-        etMornint = (EditText) view.findViewById(R.id.editMonthMorning);
-        etNight = (EditText) view.findViewById(R.id.editMonthNight);
 
-        txtDate.setText(currentDate());
         builder.setView(view);
-        builder.setTitle("Add New Element");
+        builder.setTitle("Delete Element");
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                saveData(view);
+                deleteData(view, date);
             }
         });
         return builder.create();
     }
 
-    static String currentDate(){
-        int month;
-        Calendar calendar =  Calendar.getInstance();
-        month = calendar.get(Calendar.MONTH)+1;
-        String currentDate = month+"º month";
-        return currentDate;
-    }
-
-    public void saveData(View v) {
-        String getMorning = etMornint.getText().toString();
-        String getNightl = etNight.getText().toString();
-        String getDate = txtDate.getText().toString();
-
+    public void deleteData(View v, String dateToDelete) {
         handler = new DataBaseHandler(getActivity().getBaseContext());
         handler.open();
-        long id = handler.insertData(getMorning, getNightl, getDate, MONTH);
 
-        Toast.makeText(getActivity(), "Data inserted with ID= "+id, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getBaseContext(), "Deleted: "+dateToDelete, Toast.LENGTH_LONG).show();
+        handler.deleteData(dateToDelete, MONTH);
 
         fragmentC.refresh();
         handler.close();
     }
-
 }

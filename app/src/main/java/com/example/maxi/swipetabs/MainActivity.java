@@ -124,11 +124,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         return super.onOptionsItemSelected(item);
     }
 
-    public void addMonthDialog(View v){
-        AddMonthDialog myDialog = new AddMonthDialog();
-        myDialog.show(getFragmentManager(), "Dialog");
-    }
-
     public void waitingToast(View v){
         Toast.makeText(this, "WAIT! Programador trabajando duro como un esclavo", Toast.LENGTH_LONG).show();
     }

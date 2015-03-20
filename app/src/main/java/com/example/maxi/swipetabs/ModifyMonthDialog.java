@@ -9,72 +9,69 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Calendar;
 
 /**
  * Created by Maxi on 14/03/2015.
  */
-public class AddMonthDialog extends DialogFragment{
+public class ModifyMonthDialog extends DialogFragment{
 
     public static final String MONTH = "MONTH";
-    TextView txtDate;
-    EditText etMornint, etNight;
+    EditText etMorning, etNight;
     DataBaseHandler handler;
     Fragment_c fragmentC;
+    String morning, night, date;
 
-    public AddMonthDialog(Fragment_c fragmentC) {
+    public ModifyMonthDialog(Fragment_c fragmentC, String morning, String night, String date) {
         this.fragmentC = fragmentC;
+        this.morning = morning;
+        this.night = night;
+        this.date = date;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View view = inflater.inflate(R.layout.add_month_dialog, null);
+        final View view = inflater.inflate(R.layout.modify_day_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        txtDate = (TextView) view.findViewById(R.id.editMonthDate);
-        etMornint = (EditText) view.findViewById(R.id.editMonthMorning);
-        etNight = (EditText) view.findViewById(R.id.editMonthNight);
 
-        txtDate.setText(currentDate());
+        etMorning = (EditText) view.findViewById(R.id.editMDayMorning);
+        etNight = (EditText) view.findViewById(R.id.editMDayNight);
+
+        etMorning.setText(morning);
+        etNight.setText(night);
+
+
         builder.setView(view);
-        builder.setTitle("Add New Element");
+        builder.setTitle("Update Element");
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("UpDate", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                saveData(view);
+                Toast.makeText(getActivity(), "Update", Toast.LENGTH_SHORT).show();
+
+                upData(view);
             }
         });
         return builder.create();
     }
 
-    static String currentDate(){
-        int month;
-        Calendar calendar =  Calendar.getInstance();
-        month = calendar.get(Calendar.MONTH)+1;
-        String currentDate = month+"º month";
-        return currentDate;
-    }
-
-    public void saveData(View v) {
-        String getMorning = etMornint.getText().toString();
-        String getNightl = etNight.getText().toString();
-        String getDate = txtDate.getText().toString();
+    public void upData(View v) {
+        morning = etMorning.getText().toString();
+        night = etNight.getText().toString();
 
         handler = new DataBaseHandler(getActivity().getBaseContext());
         handler.open();
-        long id = handler.insertData(getMorning, getNightl, getDate, MONTH);
 
-        Toast.makeText(getActivity(), "Data inserted with ID= "+id, Toast.LENGTH_LONG).show();
+        long id = handler.upDate(morning, night, date, MONTH);
+
+        Toast.makeText(getActivity(), id+": "+morning+"  "+night+"   "+date, Toast.LENGTH_LONG).show();
 
         fragmentC.refresh();
         handler.close();
