@@ -74,7 +74,6 @@
             android:layout_height="wrap_content"
             android:text="Add"
             android:id="@+id/btnWeekAdd"
-            android:onClick="addWeekDialog"
             android:layout_weight="0.50" />
 
     </LinearLayout>

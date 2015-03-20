@@ -17,6 +17,7 @@ import android.widget.Toast;
  */
 public class DeleteDayDialog extends DialogFragment{
 
+    public static final String DAY = "DAY";
     DataBaseHandler handler;
     Fragment_a fragmentA;
     String date;
@@ -55,7 +56,7 @@ public class DeleteDayDialog extends DialogFragment{
         handler.open();
 
         Toast.makeText(getActivity().getBaseContext(), "Deleted: "+dateToDelete, Toast.LENGTH_LONG).show();
-        handler.deleteData(dateToDelete);
+        handler.deleteData(dateToDelete, DAY);
 
         fragmentA.refresh();
         handler.close();

@@ -124,11 +124,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         return super.onOptionsItemSelected(item);
     }
 
-    public void addWeekDialog(View v){
-        AddWeekDialog myDialog = new AddWeekDialog();
-        myDialog.show(getFragmentManager(), "Dialog");
-    }
-
     public void addMonthDialog(View v){
         AddMonthDialog myDialog = new AddMonthDialog();
         myDialog.show(getFragmentManager(), "Dialog");

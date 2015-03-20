@@ -20,6 +20,7 @@ import java.util.Calendar;
  */
 public class AddDayDialog extends DialogFragment{
 
+    public static final String DAY = "DAY";
     TextView txtDate;
     EditText etMornint, etNight;
     DataBaseHandler handler;
@@ -41,7 +42,7 @@ public class AddDayDialog extends DialogFragment{
 
         txtDate.setText(currentDate());
         builder.setView(view);
-        builder.setTitle("Add New List");
+        builder.setTitle("Add New Element");
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -74,7 +75,7 @@ public class AddDayDialog extends DialogFragment{
 
         handler = new DataBaseHandler(getActivity().getBaseContext());
         handler.open();
-        long id = handler.insertData(getMorning, getNightl, getDate);
+        long id = handler.insertData(getMorning, getNightl, getDate, DAY);
 
         Toast.makeText(getActivity(), "Data inserted with ID= "+id, Toast.LENGTH_LONG).show();
 

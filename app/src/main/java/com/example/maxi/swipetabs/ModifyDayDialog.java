@@ -19,6 +19,7 @@ import java.util.Calendar;
  */
 public class ModifyDayDialog extends DialogFragment{
 
+    public static final String DAY = "DAY";
     EditText etMorning, etNight;
     DataBaseHandler handler;
     Fragment_a fragmentA;
@@ -71,7 +72,7 @@ public class ModifyDayDialog extends DialogFragment{
         handler = new DataBaseHandler(getActivity().getBaseContext());
         handler.open();
 
-        long id = handler.upDate(morning, night, date);
+        long id = handler.upDate(morning, night, date, DAY);
 
         Toast.makeText(getActivity(), id+": "+morning+"  "+night+"   "+date, Toast.LENGTH_LONG).show();
 

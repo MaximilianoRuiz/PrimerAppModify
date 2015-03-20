@@ -20,6 +20,7 @@ import java.util.List;
 
 public class Fragment_a extends Fragment {
 
+    public static final String DAY = "DAY";
     ListView listView;
     Button add;
     DataBaseHandler dataBaseHandler;
@@ -61,7 +62,7 @@ public class Fragment_a extends Fragment {
     }
 
     protected void refresh() {
-        List<WeightVO> weightVOs = dataBaseHandler.returnWeightVO();
+        List<WeightVO> weightVOs = dataBaseHandler.returnWeightVO(DAY);
         morningList = new ArrayList<>();
         nightList = new ArrayList<>();
         dateList = new ArrayList<>();
@@ -120,6 +121,6 @@ public class Fragment_a extends Fragment {
     }
 
     private String lastDateAdd(){
-        return dateList.get(0);
+        return dateList.size()!=0 ? dateList.get(0) : "";
     }
 }
