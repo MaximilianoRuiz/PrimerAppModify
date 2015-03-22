@@ -1,6 +1,5 @@
 package com.example.maxi.swipetabs;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -26,13 +25,21 @@ public class ChartActivity extends ActionBarActivity {
     private LineChartData data;
     public final static String[] days = new String[]{"Mon", "Tue", "Wen", "Thu", "Fri", "Sat", "Sun",};
     private LineChartData previewData;
+    private  List<String> dateList;
+    private  List<Float> morningList;
+    private  List<Float> nightList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_fragment);
 
-            chart = (LineChartView) findViewById(R.id.chart);
+        Bundle bundle = getIntent().getExtras();
+        preparDateList((List<String>) bundle.getSerializable("dateList"));
+        prepareMorningList((List<String>) bundle.getSerializable("morningList"));
+        prepareNightList((List<String>) bundle.getSerializable("nightList"));
+
+        chart = (LineChartView) findViewById(R.id.chart);
             previewChart = (PreviewLineChartView) findViewById(R.id.chart_preview);
 
             // Generate data for previewed chart and copy of that data for preview chart.
@@ -96,32 +103,42 @@ public class ChartActivity extends ActionBarActivity {
 
         //
         private void generateDefaultDAta2(){
-            int numValues = 50;
             List<Line> lines = new ArrayList<Line>();
 
             List<AxisValue> axisValues = new ArrayList<AxisValue>();
             List<PointValue> values = new ArrayList<PointValue>();
             List<PointValue> values2 = new ArrayList<PointValue>();
+            List<PointValue> values3 = new ArrayList<PointValue>();
 
-            for (int i = 0; i < numValues; ++i) {
-                values.add(new PointValue(i, (float) Math.random() * 50f+30));
-                axisValues.add(new AxisValue(i).setLabel(days[((int) (Math.random() * 5f))]));
+            for (int i = 0; i < morningList.size(); ++i) {
+                values.add(new PointValue(i, morningList.get(i)));
+                axisValues.add(new AxisValue(i).setLabel(dateList.get(i)));
             }
 
-            values2.add(new PointValue(1,3));
-            values2.add(new PointValue(3,100));
-            Line line2 = new Line(values2);
-            line2.setColor(Color.TRANSPARENT);
-            line2.setHasLabels(false);
+            for (int i = 0; i < nightList.size(); ++i) {
+                values2.add(new PointValue(i, nightList.get(i)));
+            }
+
+            //values3.add(new PointValue(0,morningList.get(0)));
+            //values3.add(new PointValue(morningList.size(),morningList.get(0)));
+
 
             Line line = new Line(values);
             line.setColor(ChartUtils.COLOR_BLUE);
             line.setHasPoints(false);// too many values so don't draw points.
 
+            Line line2 = new Line(values2);
+            line2.setColor(ChartUtils.COLOR_GREEN);
+            line2.setHasPoints(false);// too many values so don't draw points.
+
+            //Line line3 = new Line(values3);
+            //line3.setColor(Color.TRANSPARENT);
+            //line3.setHasLabels(false);
 
 
             lines.add(line);
             lines.add(line2);
+            //lines.add(line3);
 
             data = new LineChartData(lines);
             //data.setAxisXBottom(new Axis());
@@ -130,7 +147,7 @@ public class ChartActivity extends ActionBarActivity {
             data.setAxisYLeft(new Axis().setHasLines(true));
 
             previewData = new LineChartData(data);
-
+            previewData.getLines().get(0).setColor(ChartUtils.DEFAULT_DARKEN_COLOR);
         }
 
         private void previewX(boolean animate) {
@@ -154,5 +171,43 @@ public class ChartActivity extends ActionBarActivity {
 
         }
 
+    public void preparDateList(List<String> dateL){
+        List<String> list = new ArrayList<>();
+        for(String str : dateL){
+            String substract = str.substring(str.length() - 5);
+            list.add(str.replace(substract, ""));
+        }
+        dateList = list;
     }
+
+    public void prepareMorningList(List<String> morningL){
+        List<Float> list = new ArrayList<>();
+        for (String str : morningL){
+            str = str + "f";
+            Float flo = Float.parseFloat(str);
+            list.add(flo);
+        }
+
+        List<Float> sortList = new ArrayList<>();
+        for(int i = list.size(); i > 0; i--){
+            sortList.add(list.get(i-1));
+        }
+        morningList = sortList;
+    }
+
+    public void prepareNightList(List<String> nightL){
+        List<Float> list = new ArrayList<>();
+        for (String str : nightL){
+            str = str + "f";
+            Float flo = Float.parseFloat(str);
+            list.add(flo);
+        }
+
+        List<Float> sortList = new ArrayList<>();
+        for(int i = list.size(); i > 0; i--){
+            sortList.add(list.get(i-1));
+        }
+        nightList = sortList;
+    }
+}
 

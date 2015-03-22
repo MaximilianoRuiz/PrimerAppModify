@@ -1,7 +1,6 @@
 package com.example.maxi.swipetabs;
 
-import android.content.SharedPreferences;
-import android.database.Cursor;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 
@@ -22,7 +20,7 @@ public class Fragment_a extends Fragment {
 
     public static final String DAY = "DAY";
     ListView listView;
-    Button add;
+    Button add, chart;
     DataBaseHandler dataBaseHandler;
 
     List<String> morningList;
@@ -41,6 +39,7 @@ public class Fragment_a extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.listDay);
         add = (Button) view.findViewById(R.id.btnDayAdd);
+        chart = (Button) view.findViewById(R.id.btnDayChart);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +49,13 @@ public class Fragment_a extends Fragment {
                 }else{
                     Toast.makeText(getActivity(),"Sorry, you can only add one record per day",Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        chart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChart(view);
             }
         });
 
@@ -122,5 +128,14 @@ public class Fragment_a extends Fragment {
 
     private String lastDateAdd(){
         return dateList.size()!=0 ? dateList.get(0) : "";
+    }
+
+    public void showChart(View v){
+        Intent intent = new Intent(getActivity(), ChartActivity.class);
+        intent.putExtra("dateList", (java.io.Serializable) this.dateList);
+        intent.putExtra("morningList", (java.io.Serializable) this.morningList);
+        intent.putExtra("nightList", (java.io.Serializable) this.nightList);
+
+        startActivity(intent);
     }
 }
