@@ -61,7 +61,7 @@ public class AddMonthDialog extends DialogFragment{
         int month;
         Calendar calendar =  Calendar.getInstance();
         month = calendar.get(Calendar.MONTH)+1;
-        String currentDate = month+"º month";
+        String currentDate = obtainMonth(month);
         return currentDate;
     }
 
@@ -78,6 +78,36 @@ public class AddMonthDialog extends DialogFragment{
 
         fragmentC.refresh();
         handler.close();
+    }
+
+    private static String obtainMonth(int m) {
+        switch (m) {
+            case 1:
+                return "JAN";
+            case 2:
+                return "FEB";
+            case 3:
+                return "MAR";
+            case 4:
+                return "APR";
+            case 5:
+                return "MAY";
+            case 6:
+                return "JUN";
+            case 7:
+                return "JUL";
+            case 8:
+                return "AUG";
+            case 9:
+                return "SEP";
+            case 10:
+                return "OCT";
+            case 11:
+                return "NOV";
+            case 12:
+                return "DEC";
+        }
+        return null;
     }
 
 }

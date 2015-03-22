@@ -1,7 +1,6 @@
 package com.example.maxi.swipetabs;
 
-import android.app.Activity;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,7 +20,7 @@ public class Fragment_c extends Fragment {
 
     public static final String MONTH = "MONTH";
     ListView listView;
-    Button add;
+    Button add, chart;
     DataBaseHandler dataBaseHandler;
 
     List<String> morningList;
@@ -40,6 +39,7 @@ public class Fragment_c extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.listMonth);
         add = (Button) view.findViewById(R.id.btnMonthAdd);
+        chart = (Button) view.findViewById(R.id.btnMonthChart);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +48,18 @@ public class Fragment_c extends Fragment {
                     addMonthDialog(view);
                 } else {
                     Toast.makeText(getActivity(), "Sorry, you can only add one record per month", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        chart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(dateList.size()>1)
+                {
+                    showChart(view);
+                }else {
+                    Toast.makeText(getActivity(), "Sorry, but you need at least 2 records", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -121,5 +133,15 @@ public class Fragment_c extends Fragment {
 
     private String lastDateAdd(){
         return dateList.size()!=0 ? dateList.get(0) : "";
+    }
+
+    public void showChart(View v){
+        Intent intent = new Intent(getActivity(), ChartActivity.class);
+        intent.putExtra("dateList", (java.io.Serializable) this.dateList);
+        intent.putExtra("morningList", (java.io.Serializable) this.morningList);
+        intent.putExtra("nightList", (java.io.Serializable) this.nightList);
+        intent.putExtra("tab", (java.io.Serializable) this.MONTH);
+
+        startActivity(intent);
     }
 }

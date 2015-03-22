@@ -1,12 +1,12 @@
 package com.example.maxi.swipetabs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,7 +20,7 @@ public class Fragment_b extends Fragment {
 
     public static final String WEEK = "WEEK";
     ListView listView;
-    Button add;
+    Button add, chart;
     DataBaseHandler dataBaseHandler;
 
     List<String> morningList;
@@ -39,6 +39,7 @@ public class Fragment_b extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.listWeek);
         add = (Button) view.findViewById(R.id.btnWeekAdd);
+        chart = (Button) view.findViewById(R.id.btnWeekChart);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +48,18 @@ public class Fragment_b extends Fragment {
                     addWeekDialog(view);
                 } else {
                     Toast.makeText(getActivity(), "Sorry, you can only add one record per week", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        chart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(dateList.size()>2)
+                {
+                    showChart(view);
+                }else {
+                    Toast.makeText(getActivity(), "Sorry, but you need at least 3 records", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -120,5 +133,15 @@ public class Fragment_b extends Fragment {
 
     private String lastDateAdd(){
         return dateList.size()!=0 ? dateList.get(0) : "";
+    }
+
+    public void showChart(View v){
+        Intent intent = new Intent(getActivity(), ChartActivity.class);
+        intent.putExtra("dateList", (java.io.Serializable) this.dateList);
+        intent.putExtra("morningList", (java.io.Serializable) this.morningList);
+        intent.putExtra("nightList", (java.io.Serializable) this.nightList);
+        intent.putExtra("tab", (java.io.Serializable) this.WEEK);
+
+        startActivity(intent);
     }
 }

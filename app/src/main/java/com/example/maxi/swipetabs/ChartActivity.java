@@ -2,6 +2,7 @@ package com.example.maxi.swipetabs;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ public class ChartActivity extends ActionBarActivity {
     private  List<String> dateList;
     private  List<Float> morningList;
     private  List<Float> nightList;
+    private String tab;
+    private View mLine, nLine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +38,18 @@ public class ChartActivity extends ActionBarActivity {
         setContentView(R.layout.chart_fragment);
 
         Bundle bundle = getIntent().getExtras();
+        tab = bundle.getString("tab");
         preparDateList((List<String>) bundle.getSerializable("dateList"));
         prepareMorningList((List<String>) bundle.getSerializable("morningList"));
         prepareNightList((List<String>) bundle.getSerializable("nightList"));
+
+        mLine = (View) findViewById(R.id.morning_line);
+        nLine = (View) findViewById(R.id.night_line);
+
+        mLine.setBackgroundColor(ChartUtils.COLOR_BLUE);
+        nLine.setBackgroundColor(ChartUtils.COLOR_GREEN);
+
+
 
         chart = (LineChartView) findViewById(R.id.chart);
             previewChart = (PreviewLineChartView) findViewById(R.id.chart_preview);
@@ -173,19 +185,42 @@ public class ChartActivity extends ActionBarActivity {
 
     public void preparDateList(List<String> dateL){
         List<String> list = new ArrayList<>();
-        for(String str : dateL){
-            String substract = str.substring(str.length() - 5);
-            list.add(str.replace(substract, ""));
+        switch (tab){
+            case "DAY":
+                for(String str : dateL){
+                    String substract = str.substring(str.length() - 5);
+                    list.add(str.replace(substract, ""));
+                }
+                break;
+            case "WEEK":
+                for(String str : dateL){
+                    list.add(str.replace("º week - ", "/"));
+                }
+                break;
+            case "MONTH":
+                for(String str : dateL){
+                    list.add(str);
+                }
+                break;
+            default:
+                list.add("");
         }
-        dateList = list;
+
+        List<String> sortList = new ArrayList<>();
+        for(int i = list.size(); i > 0; i--){
+            sortList.add(list.get(i-1));
+        }
+        dateList = sortList;
     }
 
     public void prepareMorningList(List<String> morningL){
         List<Float> list = new ArrayList<>();
         for (String str : morningL){
-            str = str + "f";
-            Float flo = Float.parseFloat(str);
-            list.add(flo);
+            if(!"".equals(str)){
+                str = str + "f";
+                Float flo = Float.parseFloat(str);
+                list.add(flo);
+            }
         }
 
         List<Float> sortList = new ArrayList<>();
@@ -198,9 +233,11 @@ public class ChartActivity extends ActionBarActivity {
     public void prepareNightList(List<String> nightL){
         List<Float> list = new ArrayList<>();
         for (String str : nightL){
-            str = str + "f";
-            Float flo = Float.parseFloat(str);
-            list.add(flo);
+            if(!"".equals(str)){
+                str = str + "f";
+                Float flo = Float.parseFloat(str);
+                list.add(flo);
+            }
         }
 
         List<Float> sortList = new ArrayList<>();

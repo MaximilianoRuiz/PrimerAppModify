@@ -55,7 +55,12 @@ public class Fragment_a extends Fragment {
         chart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showChart(view);
+                if(dateList.size()>3)
+                {
+                    showChart(view);
+                }else {
+                    Toast.makeText(getActivity(), "Sorry, but you need at least 4 records", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -135,6 +140,7 @@ public class Fragment_a extends Fragment {
         intent.putExtra("dateList", (java.io.Serializable) this.dateList);
         intent.putExtra("morningList", (java.io.Serializable) this.morningList);
         intent.putExtra("nightList", (java.io.Serializable) this.nightList);
+        intent.putExtra("tab", (java.io.Serializable) this.DAY);
 
         startActivity(intent);
     }

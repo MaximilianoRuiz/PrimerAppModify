@@ -17,7 +17,7 @@ import java.util.Calendar;
 /**
  * Created by Maxi on 14/03/2015.
  */
-public class AddWeekDialog extends DialogFragment{
+public class AddWeekDialog extends DialogFragment {
 
     public static final String WEEK = "WEEK";
     TextView txtDate;
@@ -57,12 +57,12 @@ public class AddWeekDialog extends DialogFragment{
         return builder.create();
     }
 
-    static String currentDate(){
+    static String currentDate() {
         int week, month;
-        Calendar calendar =  Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         week = calendar.get(Calendar.WEEK_OF_MONTH);
-        month = calendar.get(Calendar.MONTH)+1;
-        String currentDate = week+"º week - "+month;
+        month = calendar.get(Calendar.MONTH) + 1;
+        String currentDate = week + "º week - " + obtainMonth(month);
         return currentDate;
     }
 
@@ -75,9 +75,39 @@ public class AddWeekDialog extends DialogFragment{
         handler.open();
         long id = handler.insertData(getMorning, getNightl, getDate, WEEK);
 
-        Toast.makeText(getActivity(), "Data inserted with ID= "+id, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Data inserted with ID= " + id, Toast.LENGTH_LONG).show();
 
         fragmentB.refresh();
         handler.close();
+    }
+
+    private static String obtainMonth(int m) {
+        switch (m) {
+            case 1:
+                return "JAN";
+            case 2:
+                return "FEB";
+            case 3:
+                return "MAR";
+            case 4:
+                return "APR";
+            case 5:
+                return "MAY";
+            case 6:
+                return "JUN";
+            case 7:
+                return "JUL";
+            case 8:
+                return "AUG";
+            case 9:
+                return "SEP";
+            case 10:
+                return "OCT";
+            case 11:
+                return "NOV";
+            case 12:
+                return "DEC";
+        }
+        return null;
     }
 }
