@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="Chart"
             android:id="@+id/btnMonthChart"
-            android:onClick="waitingToast"
+            android:onClick="showChart"
             android:layout_weight="0.50" />
 
         <Button

@@ -1,5 +1,6 @@
 package com.example.maxi.swipetabs;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -142,6 +143,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
       //  Log.d("VIVZ","onTabReselected at position"+ tab.getPosition()+" name "+tab.getText());
+    }
+
+    public void showChart(View v){
+        Intent intent = new Intent(this, ChartActivity.class);
+        startActivity(intent);
     }
 }
 
