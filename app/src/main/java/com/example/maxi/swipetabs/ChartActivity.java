@@ -3,7 +3,9 @@ package com.example.maxi.swipetabs;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class ChartActivity extends ActionBarActivity {
     private  List<Float> nightList;
     private String tab;
     private View mLine, nLine;
+    private TextView txtMorning, txtNight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,10 @@ public class ChartActivity extends ActionBarActivity {
 
         mLine = (View) findViewById(R.id.morning_line);
         nLine = (View) findViewById(R.id.night_line);
+        txtMorning = (TextView) findViewById(R.id.morning_status);
+        txtNight = (TextView) findViewById(R.id.night_status);
+        txtMorning.setText(setMorningText());
+        txtNight.setText(setNightText());
 
         mLine.setBackgroundColor(ChartUtils.COLOR_BLUE);
         nLine.setBackgroundColor(ChartUtils.COLOR_GREEN);
@@ -245,6 +252,32 @@ public class ChartActivity extends ActionBarActivity {
             sortList.add(list.get(i-1));
         }
         nightList = sortList;
+    }
+
+    private String setMorningText(){
+        String text;
+        DecimalFormat df = new DecimalFormat("0.0");
+
+        Float dif = morningList.get(0) - morningList.get(morningList.size()-1);
+        String sign = dif > 0 ? "less" : "more";
+        dif = dif > 0 ? dif * 1 : dif * (-1);
+        String startDate = dateList.get(0);
+        String endDate = dateList.get(morningList.size()-1);
+        text = "Morning : "+df.format(dif)+" kg "+sign+" between "+startDate+" and "+endDate;
+        return text;
+    }
+
+    private String setNightText(){
+        String text;
+        DecimalFormat df = new DecimalFormat("0.0");
+
+        Float dif = nightList.get(0) - nightList.get(nightList.size()-1);
+        String sign = dif > 0 ? "less" : "more";
+        dif = dif > 0 ? dif * 1 : dif * (-1);
+        String startDate = dateList.get(0);
+        String endDate = dateList.get(nightList.size()-1);
+        text = "Night : "+df.format(dif)+" kg "+sign+" between "+startDate+" and "+endDate;
+        return text;
     }
 }
 
