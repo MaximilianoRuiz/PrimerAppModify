@@ -11,23 +11,92 @@
 
     </android.support.v4.view.ViewPager>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:id="@+id/lateral_layout"
         android:layout_gravity="left"
-        android:background="#fffff5ff"
+        android:background="#ff171717"
         android:layout_height="match_parent"
         android:layout_width="300dp">
 
-        <ListView
-            android:id="@+id/left_pane"
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:background="#d0236772"
-            android:choiceMode="singleChoice"
-            android:divider="#ff7bdfdb"
-            android:dividerHeight="2dp"
-            android:layout_gravity="left" />
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Week Auto Complete"
+            android:id="@+id/textView9"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:layout_above="@+id/switch1"
+            android:layout_centerHorizontal="true" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/switch1"
+            android:textColor="#fffffbfe"
+            android:background="#ff171717"
+            android:textSize="40dp"
+            android:layout_above="@+id/textView10"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Month Auto Complete"
+            android:id="@+id/textView10"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:layout_above="@+id/switch2"
+            android:layout_centerHorizontal="true" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/switch2"
+            android:textColor="#fffffbfe"
+            android:background="#ff171717"
+            android:textSize="40dp"
+            android:layout_above="@+id/textView11"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Daily Alarm"
+            android:id="@+id/textView11"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:layout_above="@+id/switch3"
+            android:layout_centerHorizontal="true" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/switch3"
+            android:textColor="#fffffbfe"
+            android:textStyle="bold"
+            android:background="#ff171717"
+            android:textSize="40dp"
+            android:layout_above="@+id/btnExit"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exit"
+            android:id="@+id/btnExit"
+            android:onClick="exit"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout>

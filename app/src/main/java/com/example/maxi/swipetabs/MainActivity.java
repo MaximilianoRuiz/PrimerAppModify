@@ -1,28 +1,23 @@
 package com.example.maxi.swipetabs;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener{
 
-    private ListView listView;
     private DrawerLayout drawerLayout;
     private final String[] opciones = { "Opción 1", "Opción 2"};
     private final String[] tabs = { "Days", "Weeks", "Months" };
     private View lateralLayout;
-
 
     private ViewPager viewPager;
     private MyAdapter mAdapter;
@@ -33,14 +28,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = (ListView) findViewById(R.id.left_pane);
+        //listView = (ListView) findViewById(R.id.left_pane);
         lateralLayout = findViewById(R.id.lateral_layout);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        listView.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1,
-                opciones));
+//        listView.setAdapter(new ArrayAdapter<>(this,
+//                android.R.layout.simple_list_item_1, android.R.id.text1,
+//                opciones));
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setOnPageChangeListener( new ViewPager.OnPageChangeListener() {
@@ -145,9 +140,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
       //  Log.d("VIVZ","onTabReselected at position"+ tab.getPosition()+" name "+tab.getText());
     }
 
-    public void showChart(View v){
-        Intent intent = new Intent(this, ChartActivity.class);
-        startActivity(intent);
+    public void exit(View v){
+        MainActivity.this.finish();
     }
 }
 
