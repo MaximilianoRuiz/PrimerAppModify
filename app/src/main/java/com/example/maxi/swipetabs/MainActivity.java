@@ -74,7 +74,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             actionBar.addTab(actionBar.newTab().setText(tab_name)
                     .setTabListener(this));
         }
-
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_drawer);
     }
 
     @Override
