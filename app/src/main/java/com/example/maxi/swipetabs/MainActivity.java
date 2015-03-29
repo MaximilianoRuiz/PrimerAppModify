@@ -1,5 +1,6 @@
 package com.example.maxi.swipetabs;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -10,32 +11,31 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener{
 
     private DrawerLayout drawerLayout;
-    private final String[] opciones = { "Opción 1", "Opción 2"};
     private final String[] tabs = { "Days", "Weeks", "Months" };
     private View lateralLayout;
 
     private ViewPager viewPager;
     private MyAdapter mAdapter;
     private ActionBar actionBar;
+    private Switch alarm;
+
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //listView = (ListView) findViewById(R.id.left_pane);
         lateralLayout = findViewById(R.id.lateral_layout);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-//        listView.setAdapter(new ArrayAdapter<>(this,
-//                android.R.layout.simple_list_item_1, android.R.id.text1,
-//                opciones));
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setOnPageChangeListener( new ViewPager.OnPageChangeListener() {
@@ -76,11 +76,21 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.ic_drawer);
+
+        alarm = (Switch) findViewById(R.id.switch3);
+
+        loadSettings();
+
+        alarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                saveSettings("alarm", isChecked);
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -121,10 +131,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         return super.onOptionsItemSelected(item);
     }
 
-    public void waitingToast(View v){
-        Toast.makeText(this, "WAIT! Programador trabajando duro como un esclavo", Toast.LENGTH_LONG).show();
-    }
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
         //Log.d("VIVZ","onTabSelected at position"+ tab.getPosition()+" name "+tab.getText());
@@ -143,6 +149,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void exit(View v){
         MainActivity.this.finish();
+    }
+
+    public void saveSettings(String switchName, Boolean status){
+        preferences = getSharedPreferences("my_settings", MODE_PRIVATE);
+        editor = preferences.edit();
+
+        editor.putBoolean(switchName, status);
+        editor.commit();
+    }
+
+    public void loadSettings(){
+        preferences = getSharedPreferences("my_settings", MODE_PRIVATE);
+
+        alarm.setChecked(preferences.getBoolean("alarm", false));
     }
 }
 
